@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+    <head lang="en">
+            <meta charset="UTF-8">
+            <title>Seznam gostov in sporocil</title>
+    </head>
+
+    <body>
+    <h1>Seznam gostov in sporočil</h1>
+
+    {% for guestbook in seznam %}
+
+        <p><a href="/sporocilo/{{ guestbook.key.id() }}">{{ guestbook.priimek }}</a>, {{ guestbook.ime }},
+            {{ guestbook.email }}, {{ guestbook.message }}, {{ guestbook.key.id() }}, {{ guestbook.nastanek }}</p>
+    {% endfor %}
+
+        </b>
+    </body>
+</html>
