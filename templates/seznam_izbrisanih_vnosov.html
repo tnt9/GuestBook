@@ -6,18 +6,25 @@
             <title>Seznam gostov in sporocil</title>
     </head>
 
-    <body>
-    <h1>Seznam gostov in sporočil</h1>
+    <br>
+    <h1>Seznam izbrisanih gostov</h1>
 
     {% for guestbook in seznam %}
 
         <p><a href="/sporocilo/{{ guestbook.key.id() }}">{{ guestbook.priimek }}</a>, {{ guestbook.ime }},
             {{ guestbook.email }}, {{ guestbook.message }}, {{ guestbook.key.id() }}, {{ guestbook.nastanek }}
-            <a href="/sporocilo/{{ guestbook.key.id() }}/uredi">Uredi</a></p>
+            <a href="/sporocilo/{{ guestbook.key.id() }}/restore">Ponovno prikaži</a>
+            <a href="/sporocilo/{{ guestbook.key.id() }}/delete">Dokončno zbriši</a></p>
     {% endfor %}
+
+        </br>
+        <a href="seznam-sporocil">Nazaj na seznam gostov in sporočil</a>
 
         </br>
     </body>
 </html>
+
+
+
 
 

@@ -14,6 +14,10 @@
         <p>e-mail: {{ sporocilo.email }}</p>
         <p>Message: {{ sporocilo.message }}</p>
         <p>Datum {{ sporocilo.nastanek }}</p>
+        <a href="/sporocilo/{{ sporocilo.key.id()}}/uredi">uredi sporocilo</a>
+        <a href="/sporocilo/{{ sporocilo.key.id()}}/izbrisi">izbriši sporocilo</a>
 
     </body>
 </html>
+
+
