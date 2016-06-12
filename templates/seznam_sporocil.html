@@ -11,9 +11,11 @@
 
     {% for guestbook in seznam %}
 
-        <p><a href="/sporocilo/{{ guestbook.key.id() }}">{{ guestbook.priimek }}</a>, {{ guestbook.ime }},
-            {{ guestbook.email }}, {{ guestbook.message }}, {{ guestbook.key.id() }}, {{ guestbook.nastanek }}
-            <a href="/sporocilo/{{ guestbook.key.id() }}/uredi">Uredi</a></p>
+        <p><a href="/sporocilo/{{ guestbook.key.id() }}" style="padding-right: 0.1em; font-size: 1.25em">
+            {{ guestbook.priimek }}</a>, {{ guestbook.ime }}, {{ guestbook.email }}, {{ guestbook.message }},
+            {{ guestbook.key.id() }}, {{ guestbook.nastanek }}
+            <a href="/sporocilo/{{ guestbook.key.id() }}/uredi" style="color: #00b3b3; font-family: arial;
+             padding-left: 0.5em"><em>Uredi</em></a></p>
     {% endfor %}
 
         </br>

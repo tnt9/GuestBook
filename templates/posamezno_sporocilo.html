@@ -14,8 +14,10 @@
         <p>e-mail: {{ sporocilo.email }}</p>
         <p>Message: {{ sporocilo.message }}</p>
         <p>Datum {{ sporocilo.nastanek }}</p>
-        <a href="/sporocilo/{{ sporocilo.key.id()}}/uredi">uredi sporocilo</a>
-        <a href="/sporocilo/{{ sporocilo.key.id()}}/izbrisi">izbriši sporocilo</a>
+        <a href="/sporocilo/{{ sporocilo.key.id()}}/uredi" style="color: #33ccff; font-family: arial;
+        padding-right: 0.5em; padding-left: 05.em"><em>Uredi sporočilo</em></a>
+        <a href="/sporocilo/{{ sporocilo.key.id()}}/izbrisi" style="color: #ff33cc; font-family: arial;
+        padding-right: 0.5em; padding-left: 05.em"><em>Izbriši sporocilo</em></a>
 
     </body>
 </html>
