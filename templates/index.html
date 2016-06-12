@@ -18,7 +18,8 @@
         <input name="ime" placeholder="Please, enter your name."><br>
         <input name="priimek" placeholder="Please, enter your last name."><br>
         <input name="email" placeholder="Please, enter your e-mail address."><br>
-        <input name ="message" type="text" id="textbox" placeholder="Message (*required)"><br>
+        <textarea name="text" placeholder="Message"></textarea>
+<!--       <input name ="message" type="text" id="textbox" placeholder="Message (*required)"><br>  -->
             {% if error %}
                  <p id="error"><strong>Please, fill in the message form!</strong> </p>
             {% endif %}

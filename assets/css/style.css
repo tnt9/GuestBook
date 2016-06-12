@@ -28,6 +28,14 @@ input {
     display: textbox;
 }
 
+textarea {
+    font-size: 1em;
+    height: 15em;
+    width: 20em;
+    margin-left: 40%;
+    margin-top: 25px;
+}
+
 
 #textbox {
     font-size:1em;

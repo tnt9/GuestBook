@@ -45,7 +45,8 @@ class VnosHandler(BaseHandler):
         if priimek == "":
             priimek = "N/A"
         email = self.request.get("email")
-        message = self.request.get("message")
+        message = self.request.get("text")
+#        message = self.request.get("message")
 
         if message:
             guestbook = Guestbook(ime=ime, priimek=priimek, email=email, message=message)
