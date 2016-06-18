@@ -10,23 +10,33 @@
 </head>
 
 <body>
+    <section class="header">
+        {% if logiran %}
+            <p>Hello, {{ user.nickname() }}! </p>
+            <p><a href="{{ logout_url }}">Logout</a></p>
+        {% else %}
+            <p>Hello, stranger!</p>
+            <p style="font-size: 0.75em">To send message, please login.</p>
+            <p><a href ="{{ login_url }}">Login</a></p>
+        {% endif %}
+    </section>
+    <section class="forma">
+        <h1>Hotel Guest Book</h1>
 
-    <h1>Hotel Guest Book</h1>
 
+        <form action="/vnos" method="post">
+            <input name="ime" placeholder="Please, enter your name."><br>
+            <input name="priimek" placeholder="Please, enter your last name."><br>
+            <input name="email" placeholder="Please, enter your e-mail address."><br>
+            <textarea name="text" placeholder="Message"></textarea>
+    <!--       <input name ="message" type="text" id="textbox" placeholder="Message (*required)"><br>  -->
+                {% if error %}
+                     <p id="error"><strong>Please, fill in the message form!</strong> </p>
+                {% endif %}
 
-    <form action="/vnos" method="post">
-        <input name="ime" placeholder="Please, enter your name."><br>
-        <input name="priimek" placeholder="Please, enter your last name."><br>
-        <input name="email" placeholder="Please, enter your e-mail address."><br>
-        <textarea name="text" placeholder="Message"></textarea>
-<!--       <input name ="message" type="text" id="textbox" placeholder="Message (*required)"><br>  -->
-            {% if error %}
-                 <p id="error"><strong>Please, fill in the message form!</strong> </p>
-            {% endif %}
-
-        <button type="submit"><em>Submit</em></button>
-    </form>
-
+            <button type="submit"><em>Submit</em></button>
+        </form>
+    </section>
 
 </body>
 

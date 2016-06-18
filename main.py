@@ -3,6 +3,7 @@ import os
 import jinja2
 import webapp2
 from models import Guestbook
+from google.appengine.api import users
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -29,7 +30,16 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        return self.render_template("index.html")
+        user = users.get_current_user()
+        if user:
+            logiran = True
+            logout_url = users.create_logout_url('/')
+            params = {"logiran": logiran, "logout_url": logout_url, "user": user}
+        else:
+            logiran = False
+            login_url = users.create_login_url('/')
+            params = {"logiran": logiran, "login_url": login_url, "user": user}
+        return self.render_template("index.html", params)
 
 
 class VnosHandler(BaseHandler):
@@ -46,12 +56,13 @@ class VnosHandler(BaseHandler):
             priimek = "N/A"
         email = self.request.get("email")
         message = self.request.get("text")
-#        message = self.request.get("message")
 
         if message:
             guestbook = Guestbook(ime=ime, priimek=priimek, email=email, message=message)
-            guestbook.put()
-            return self.write(guestbook)
+#            guestbook.put()
+#            return self.write(guestbook)
+            params = {"guestbook": guestbook}
+            return self.render_template("vnos.html", params=params)
         else:
             error = True
             return self.get()
@@ -59,23 +70,41 @@ class VnosHandler(BaseHandler):
 
 class SeznamVnosovHandler(BaseHandler):
     def get(self):
-        seznam = Guestbook.query(Guestbook.izbrisan == False).order(Guestbook.priimek).fetch()
-        params = {"seznam": seznam}
-        return self.render_template("seznam_sporocil.html", params=params)
+        user = users.get_current_user()
+        if user:
+            self.write(user.email())
+            if user.email() == "nina.tratnik@gmail.com":
+                seznam = Guestbook.query(Guestbook.izbrisan == False).order(Guestbook.priimek).fetch()
+                params = {"seznam": seznam}
+                return self.render_template("seznam_sporocil.html", params=params)
+            else:
+                return self.rendirect_to('/')
 
 
 class PosamezenVnosHandler(BaseHandler):
     def get(self, guestbook_id):
-        sporocilo = Guestbook.get_by_id(int(guestbook_id))
-        params = {"sporocilo": sporocilo}
-        return self.render_template("posamezno_sporocilo.html", params=params)
+        user = users.get_current_user()
+        if user:
+            self.write(user.email())
+            if user.email() == "nina.tratnik@gmail.com":
+                sporocilo = Guestbook.get_by_id(int(guestbook_id))
+                params = {"sporocilo": sporocilo}
+                return self.render_template("posamezno_sporocilo.html", params=params)
+            else:
+                return self.rendirect_to('/')
 
 
 class UrediVnosHandler(BaseHandler):
     def get(self, guestbook_id):
-        sporocilo = Guestbook.get_by_id(int(guestbook_id))
-        params = {"sporocilo": sporocilo}
-        return self.render_template("uredi_vnos.html", params=params)
+        user = users.get_current_user()
+        if user:
+            self.write(user.email())
+            if user.email() == "nina.tratnik@gmail.com":
+                sporocilo = Guestbook.get_by_id(int(guestbook_id))
+                params = {"sporocilo": sporocilo}
+                return self.render_template("uredi_vnos.html", params=params)
+            else:
+                return self.rendirect_to('/')
 
     def post(self, guestbook_id):
         ime = self.request.get("ime")
@@ -93,9 +122,15 @@ class UrediVnosHandler(BaseHandler):
 
 class IzbrisiVnosHandler(BaseHandler):
     def get(self, guestbook_id):
-        sporocilo = Guestbook.get_by_id(int(guestbook_id))
-        params = {"sporocilo": sporocilo}
-        return self.render_template("izbrisi_vnos.html", params=params)
+        user = users.get_current_user()
+        if user:
+            self.write(user.email())
+            if user.email() == "nina.tratnik@gmail.com":
+                sporocilo = Guestbook.get_by_id(int(guestbook_id))
+                params = {"sporocilo": sporocilo}
+                return self.render_template("izbrisi_vnos.html", params=params)
+            else:
+                return self.rendirect_to('/')
 
     def post(self, guestbook_id):
         sporocilo = Guestbook.get_by_id(int(guestbook_id))
@@ -106,16 +141,28 @@ class IzbrisiVnosHandler(BaseHandler):
 
 class SeznamIzbrisanihVnosovHandler(BaseHandler):
     def get(self):
-        seznam = Guestbook.query(Guestbook.izbrisan == True).order(Guestbook.priimek).fetch()
-        params = {"seznam": seznam}
-        return self.render_template("seznam_izbrisanih_vnosov.html", params=params)
+        user = users.get_current_user()
+        if user:
+            self.write(user.email())
+            if user.email() == "nina.tratnik@gmail.com":
+                seznam = Guestbook.query(Guestbook.izbrisan == True).order(Guestbook.priimek).fetch()
+                params = {"seznam": seznam}
+                return self.render_template("seznam_izbrisanih_vnosov.html", params=params)
+            else:
+                return self.rendirect_to('/')
 
 
 class PonovnoIzpisiVnosHandler(BaseHandler):
     def get(self, guestbook_id):
-        sporocilo = Guestbook.get_by_id(int(guestbook_id))
-        params = {"sporocilo": sporocilo}
-        return self.render_template("restore_vnos.html", params=params)
+        user = users.get_current_user()
+        if user:
+            self.write(user.email())
+            if user.email() == "nina.tratnik@gmail.com":
+                sporocilo = Guestbook.get_by_id(int(guestbook_id))
+                params = {"sporocilo": sporocilo}
+                return self.render_template("restore_vnos.html", params=params)
+            else:
+                return self.rendirect_to('/')
 
     def post(self, guestbook_id):
         sporocilo = Guestbook.get_by_id(int(guestbook_id))
@@ -126,9 +173,15 @@ class PonovnoIzpisiVnosHandler(BaseHandler):
 
 class DokoncnoIzpisiVnosHandler(BaseHandler):
     def get(self, guestbook_id):
-        sporocilo = Guestbook.get_by_id(int(guestbook_id))
-        params = {"sporocilo": sporocilo}
-        return self.render_template("dokoncni_delete_vnosa.html", params=params)
+        user = users.get_current_user()
+        if user:
+            self.write(user.email())
+            if user.email() == "nina.tratnik@gmail.com":
+                sporocilo = Guestbook.get_by_id(int(guestbook_id))
+                params = {"sporocilo": sporocilo}
+                return self.render_template("dokoncni_delete_vnosa.html", params=params)
+            else:
+                return self.rendirect_to('/')
 
     def post(self, guestbook_id):
         sporocilo = Guestbook.get_by_id(int(guestbook_id))

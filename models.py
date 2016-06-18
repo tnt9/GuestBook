@@ -8,3 +8,4 @@ class Guestbook(ndb.Model):
     message = ndb.TextProperty(required=True)
     nastanek =ndb.DateTimeProperty(auto_now_add=True)
     izbrisan = ndb.BooleanProperty(default=False)
+
